@@ -9,17 +9,24 @@ function ClaimHistory() {
   }, []);
 
   const fetchHistory = async () => {
-    try {
-      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/history');
-      const data = await response.json();
-      credentials: "include",
-      setHistory(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching history:', error);
-      setLoading(false);
+  try {
+    const response = await fetch('https://leaderboard-kappa-virid.vercel.app/claims/history', {
+      method: 'GET',
+      // credentials: 'include'  // if your backend needs cookies or sessions
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  };
+
+    const data = await response.json();
+    setHistory(data);
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching history:', error);
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return <div className="loading">Loading history...</div>;

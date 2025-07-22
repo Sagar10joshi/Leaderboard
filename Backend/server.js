@@ -3,13 +3,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 // import userRoutes from './routes/users.js';
 // import claimRoutes from './routes/claims.js';
-import {User} from './models/User.js';
-import {ClaimHistory} from './models/ClaimHistory.js';
+import { User } from './models/User.js';
+import { ClaimHistory } from './models/ClaimHistory.js';
 import dbConnect from './models/dbConnect.js'
 
 // dotenv.config();
 dotenv.config({
-    path : "./.env"
+  path: "./.env"
 })
 
 const app = express();
@@ -19,28 +19,28 @@ const PORT = process.env.PORT || 5000;
 
 // CORS middleware configuration
 const corsOptions = {
-    origin: 'https://leaderboard-jbk4.vercel.app',  // Allow only your frontend domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true  // Allow cookies or credentials if needed
-  };
-  
-  app.use(cors(corsOptions));
-  
+  origin: 'https://leaderboard-jbk4.vercel.app',  // Allow only your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true  // Allow cookies or credentials if needed
+};
+
+app.use(cors(corsOptions));
+
 // app.use(cors({}));
 app.use(express.json());
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }))
 
 
 // app.use(cors());
 // app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.json("Welcome to Server")
+app.get('/', (req, res) => {
+  res.json("Welcome to Server")
 })
 
-app.get('/claims/history',(req,res)=>{
-    res.json("Welcome to Server")
+app.get('/claims/history', (req, res) => {
+  res.json("Welcome to Server")
 })
 
 
@@ -80,18 +80,19 @@ app.get('/claims/history',(req,res)=>{
 
 
 // Get all users with rankings
-app.get('/', async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
     const users = await User.find().sort({ points: -1 });
-    
+
     // Add rank to each user
     const usersWithRank = users.map((user, index) => ({
       ...user.toObject(),
       rank: index + 1
     }));
-    
+
     res.json(usersWithRank);
   } catch (error) {
+    console.error('Error in GET /users:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -134,27 +135,27 @@ app.get('/:id', async (req, res) => {
 
 
 // Claim points for a user
-app.post('/', async (req, res) => {
+app.post('/claims', async (req, res) => {
   try {
     const { userId } = req.body;
-    
+
     if (!userId) {
       return res.status(400).json({ error: 'User ID is required' });
     }
-    
+
     // Find the user
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
+
     // Generate random points (1-10)
     const pointsAwarded = Math.floor(Math.random() * 10) + 1;
-    
+
     // Update user points
     user.points += pointsAwarded;
     await user.save();
-    
+
     // Create claim history
     const claimHistory = new ClaimHistory({
       userId: user._id,
@@ -162,7 +163,7 @@ app.post('/', async (req, res) => {
       pointsAwarded
     });
     await claimHistory.save();
-    
+
     res.json({
       user,
       pointsAwarded,
@@ -174,7 +175,7 @@ app.post('/', async (req, res) => {
 });
 
 // Get claim history
-app.get('/history', async (req, res) => {
+app.get('/claims/history', async (req, res) => {
   try {
     const history = await ClaimHistory.find()
       .sort({ claimedAt: -1 })

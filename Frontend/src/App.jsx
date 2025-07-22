@@ -7,7 +7,7 @@ import ClaimHistory from '../components/ClaimHistory.jsx';
 import './App.css';
 
 function App() {
-  
+
   const [users, setUsers] = useState([]);
   const [activeControl, setActiveControl] = useState('none');
   const [selectedUser, setSelectedUser] = useState(null);
@@ -58,35 +58,35 @@ function App() {
 
 
   const fetchUsers = async () => {
-  try {
-    const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users', {
-      method: 'GET',
-      credentials: 'include', // if your backend expects cookies or sessions
-    });
+    try {
+      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users', {
+        method: 'GET',
+        credentials: 'include', // if your backend expects cookies or sessions
+      });
 
-    // Optional: check for non-OK response
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // Optional: check for non-OK response
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!Array.isArray(data)) {
+        throw new Error("Expected an array of users but got: " + JSON.stringify(data));
+      }
+
+      setUsers(data);
+      setLoading(false);
+
+      setTimeout(() => {
+        setActiveControl('none');
+      }, 3000);
+
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setLoading(false);
     }
-
-    const data = await response.json();
-
-    if (!Array.isArray(data)) {
-      throw new Error("Expected an array of users but got: " + JSON.stringify(data));
-    }
-
-    setUsers(data);
-    setLoading(false);
-
-    setTimeout(() => {
-      setActiveControl('none');
-    }, 3000);
-
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    setLoading(false);
-  }
-};
+  };
 
 
 
@@ -135,8 +135,8 @@ function App() {
         }, 3000);
 
         setTimeout(() => {
-        setActiveControl('none');
-      }, 3000);
+          setActiveControl('none');
+        }, 3000);
 
       } else {
         alert(data.error);
