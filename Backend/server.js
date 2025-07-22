@@ -37,7 +37,7 @@ app.get('/',(req,res)=>{
     res.json("Welcome to Server")
 })
 
-app.get('/api/claims/history',(req,res)=>{
+app.get('/claims/history',(req,res)=>{
     res.json("Welcome to Server")
 })
 
@@ -69,8 +69,8 @@ const initializeUsers = async () => {
 };
  dbConnect()
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/claims', claimRoutes);
+app.use('/users', userRoutes);
+app.use('/claims', claimRoutes);
 
 app.post('/',(req,res)=>{
   res.send("hello")
