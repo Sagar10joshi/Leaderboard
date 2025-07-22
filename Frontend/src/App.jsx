@@ -60,13 +60,15 @@ function App() {
   const fetchUsers = async () => {
     try {
       const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users', {
-        method: 'GET',
-        credentials: 'include', // if your backend expects cookies or sessions
+        // method: 'GET',
+        // credentials: 'include', // if your backend expects cookies or sessions
       });
 
       // Optional: check for non-OK response
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // throw new Error(`HTTP error! Status: ${response.status}`);
+        console.log("Error api 1");
+        
       }
 
       const data = await response.json();
