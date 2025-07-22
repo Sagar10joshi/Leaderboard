@@ -51,6 +51,7 @@ app.post('/',(req,res)=>{
   res.send("hello")
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+export default app;
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
