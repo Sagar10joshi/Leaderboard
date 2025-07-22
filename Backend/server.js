@@ -39,9 +39,9 @@ app.get('/', (req, res) => {
   res.json("Welcome to Server")
 })
 
-app.get('/claims/history', (req, res) => {
-  res.json("Welcome to Server")
-})
+// app.get('/claims/history', (req, res) => {
+//   res.json("Welcome to Server")
+// })
 
 
 
