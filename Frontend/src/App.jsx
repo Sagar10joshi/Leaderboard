@@ -59,7 +59,7 @@ function App() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/users');
+      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users');
       const data = await response.json();
       credentials: "include",
       setUsers(data);
@@ -81,7 +81,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/claims', {
+      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/claims', {
         method: 'POST',
         credentials: "include",
         headers: {

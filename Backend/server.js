@@ -193,9 +193,9 @@ app.get('/history', async (req, res) => {
 
 
 
-app.post('/',(req,res)=>{
-  res.send("hello")
-})
+// app.post('/',(req,res)=>{
+//   res.send("hello")
+// })
 
 export default app;
 // app.listen(PORT, () => {
