@@ -11,12 +11,14 @@ function ClaimHistory() {
   const fetchHistory = async () => {
   try {
     const response = await fetch('https://leaderboard-kappa-virid.vercel.app/claims/history', {
-      method: 'GET',
+      // method: 'GET',
       // credentials: 'include'  // if your backend needs cookies or sessions
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // throw new Error(`HTTP error! Status: ${response.status}`);
+      console.log("Error in claim");
+      
     }
 
     const data = await response.json();
