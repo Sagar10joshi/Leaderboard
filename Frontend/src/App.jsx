@@ -82,7 +82,7 @@ function App() {
 
       setTimeout(() => {
         setActiveControl('none');
-      }, 3000);
+      }, 2000);
 
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -92,23 +92,7 @@ function App() {
 
 
 
-  // const fetchUsers = async () => {
-  //   try {
-  //     const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users');
-  //     method: 'GET',
-  //     const data = await response.json();
-  //     credentials: "include",
-  //     setUsers(data);
-  //     setLoading(false);
-
-  //      setTimeout(() => {
-  //       setActiveControl('none');
-  //     }, 3000);
-  //   } catch (error) {
-  //     console.error('Error fetching users:', error);
-  //     setLoading(false);
-  //   }
-  // };
+  
 
   const handleClaimPoints = async () => {
     if (!selectedUser) {
@@ -134,11 +118,11 @@ function App() {
         // Clear the points display after 3 seconds
         setTimeout(() => {
           setLastClaimedPoints(null);
-        }, 3000);
+        }, 2000);
 
         setTimeout(() => {
           setActiveControl('none');
-        }, 3000);
+        }, 2000);
 
       } else {
         alert(data.error);
