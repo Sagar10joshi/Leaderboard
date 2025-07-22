@@ -83,9 +83,9 @@ app.get('/', (req, res) => {
 app.get('/users', async (req, res) => {
   try {
     const users = await User.find().sort({ points: -1 });
-    if(!users){
-      console.log("Error api 1 server");
-    }
+    // if(!users){
+    //   console.log("Error api 1 server");
+    // }
 
     // Add rank to each user
     const usersWithRank = users.map((user, index) => ({

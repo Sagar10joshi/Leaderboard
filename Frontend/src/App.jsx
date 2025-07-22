@@ -82,7 +82,7 @@ function App() {
 
       setTimeout(() => {
         setActiveControl('none');
-      }, 2000);
+      }, 3000);
 
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -118,11 +118,11 @@ function App() {
         // Clear the points display after 3 seconds
         setTimeout(() => {
           setLastClaimedPoints(null);
-        }, 2000);
+        }, 3000);
 
         setTimeout(() => {
           setActiveControl('none');
-        }, 2000);
+        }, 3000);
 
       } else {
         alert(data.error);
