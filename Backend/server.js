@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/users.js';
 import claimRoutes from './routes/claims.js';
 import User from './models/User.js';
+import ClaimHistory from './models/ClaimHistory.js';
 import dbConnect from './models/dbConnect.js'
 
 // dotenv.config();
@@ -68,9 +69,130 @@ const initializeUsers = async () => {
   }
 };
  dbConnect()
-// Routes
-app.use('/users', userRoutes);
-app.use('/claims', claimRoutes);
+// // Routes
+// app.use('/users', userRoutes);
+// app.use('/claims', claimRoutes);
+
+
+
+
+
+
+// Get all users with rankings
+app.get('/', async (req, res) => {
+  try {
+    const users = await User.find().sort({ points: -1 });
+    
+    // Add rank to each user
+    const usersWithRank = users.map((user, index) => ({
+      ...user.toObject(),
+      rank: index + 1
+    }));
+    
+    res.json(usersWithRank);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Add new user
+app.post('/', async (req, res) => {
+  try {
+    const { name } = req.body;
+    
+    if (!name) {
+      return res.status(400).json({ error: 'Name is required' });
+    }
+    
+    // Check if user already exists
+    const existingUser = await User.findOne({ name: name.trim() });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+    
+    const newUser = new User({ name: name.trim() });
+    await newUser.save();
+    
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get user by ID
+app.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+// Claim points for a user
+app.post('/', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+    
+    // Find the user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Generate random points (1-10)
+    const pointsAwarded = Math.floor(Math.random() * 10) + 1;
+    
+    // Update user points
+    user.points += pointsAwarded;
+    await user.save();
+    
+    // Create claim history
+    const claimHistory = new ClaimHistory({
+      userId: user._id,
+      userName: user.name,
+      pointsAwarded
+    });
+    await claimHistory.save();
+    
+    res.json({
+      user,
+      pointsAwarded,
+      totalPoints: user.points
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get claim history
+app.get('/history', async (req, res) => {
+  try {
+    const history = await ClaimHistory.find()
+      .sort({ claimedAt: -1 })
+      .limit(50);
+    res.json(history);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+
 
 app.post('/',(req,res)=>{
   res.send("hello")
