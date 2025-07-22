@@ -20,4 +20,4 @@ const claimHistorySchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model('ClaimHistory', claimHistorySchema);
+export const ClaimHistory =  mongoose.model('ClaimHistory', claimHistorySchema);

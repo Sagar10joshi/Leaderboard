@@ -3,8 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 // import userRoutes from './routes/users.js';
 // import claimRoutes from './routes/claims.js';
-import User from './models/User.js';
-import ClaimHistory from './models/ClaimHistory.js';
+import {User} from './models/User.js';
+import {ClaimHistory} from './models/ClaimHistory.js';
 import dbConnect from './models/dbConnect.js'
 
 // dotenv.config();
@@ -34,9 +34,9 @@ app.use(express.urlencoded({extended:false}))
 // app.use(cors());
 // app.use(express.json());
 
-// app.get('/',(req,res)=>{
-//     res.json("Welcome to Server")
-// })
+app.get('/',(req,res)=>{
+    res.json("Welcome to Server")
+})
 
 app.get('/claims/history',(req,res)=>{
     res.json("Welcome to Server")
