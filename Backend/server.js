@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import userRoutes from './routes/users.js';
-import claimRoutes from './routes/claims.js';
+// import userRoutes from './routes/users.js';
+// import claimRoutes from './routes/claims.js';
 import User from './models/User.js';
 import ClaimHistory from './models/ClaimHistory.js';
 import dbConnect from './models/dbConnect.js'
@@ -34,9 +34,9 @@ app.use(express.urlencoded({extended:false}))
 // app.use(cors());
 // app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.json("Welcome to Server")
-})
+// app.get('/',(req,res)=>{
+//     res.json("Welcome to Server")
+// })
 
 app.get('/claims/history',(req,res)=>{
     res.json("Welcome to Server")
@@ -96,23 +96,22 @@ app.get('/', async (req, res) => {
 });
 
 // Add new user
-app.post('/', async (req, res) => {
+app.post('/users', async (req, res) => {
   try {
     const { name } = req.body;
-    
+
     if (!name) {
       return res.status(400).json({ error: 'Name is required' });
     }
-    
-    // Check if user already exists
+
     const existingUser = await User.findOne({ name: name.trim() });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
-    
+
     const newUser = new User({ name: name.trim() });
     await newUser.save();
-    
+
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: error.message });
