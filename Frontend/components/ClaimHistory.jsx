@@ -10,7 +10,7 @@ function ClaimHistory() {
 
   const fetchHistory = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/claims/history');
+      const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/api/claims/history');
       const data = await response.json();
       setHistory(data);
       setLoading(false);
