@@ -184,6 +184,9 @@ app.get('/history', async (req, res) => {
       .sort({ claimedAt: -1 })
       .limit(50);
     res.json(history);
+
+    console.log(history);
+    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
