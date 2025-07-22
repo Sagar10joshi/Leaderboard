@@ -14,11 +14,14 @@ function ClaimHistory() {
       // method: 'GET',
       // credentials: 'include'  // if your backend needs cookies or sessions
     });
-    console.log(response);
+    console.log("The response -", response);
     
 
     if (!response.ok) {
-      // throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    if (!response.ok) {
       console.log("Error in claim");
     }
 

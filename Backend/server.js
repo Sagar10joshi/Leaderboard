@@ -178,7 +178,7 @@ app.post('/claims', async (req, res) => {
 });
 
 // Get claim history
-app.get('/history', async (req, res) => {
+app.get('/claims/history', async (req, res) => {
   try {
     const history = await ClaimHistory.find()
       .sort({ claimedAt: -1 })
