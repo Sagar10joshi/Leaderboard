@@ -58,21 +58,55 @@ function App() {
 
 
   const fetchUsers = async () => {
-    try {
-      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users');
-      const data = await response.json();
-      credentials: "include",
-      setUsers(data);
-      setLoading(false);
+  try {
+    const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users', {
+      method: 'GET',
+      credentials: 'include', // if your backend expects cookies or sessions
+    });
 
-       setTimeout(() => {
-        setActiveControl('none');
-      }, 3000);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      setLoading(false);
+    // Optional: check for non-OK response
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  };
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("Expected an array of users but got: " + JSON.stringify(data));
+    }
+
+    setUsers(data);
+    setLoading(false);
+
+    setTimeout(() => {
+      setActiveControl('none');
+    }, 3000);
+
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    setLoading(false);
+  }
+};
+
+
+
+  // const fetchUsers = async () => {
+  //   try {
+  //     const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users');
+  //     method: 'GET',
+  //     const data = await response.json();
+  //     credentials: "include",
+  //     setUsers(data);
+  //     setLoading(false);
+
+  //      setTimeout(() => {
+  //       setActiveControl('none');
+  //     }, 3000);
+  //   } catch (error) {
+  //     console.error('Error fetching users:', error);
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleClaimPoints = async () => {
     if (!selectedUser) {

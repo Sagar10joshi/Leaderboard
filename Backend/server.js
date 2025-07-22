@@ -31,6 +31,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 
+
 // app.use(cors());
 // app.use(express.json());
 
@@ -44,31 +45,31 @@ app.get('/claims/history',(req,res)=>{
 
 
 
-const initializeUsers = async () => {
-  try {
-    const userCount = await User.countDocuments();
-    if (userCount === 0) {
-      const defaultUsers = [
-        { name: 'Rahul', points: 1134590 },
-        { name: 'Pritesh', points: 1614546 },
-        { name: 'Krishu Rajput', points: 942034 },
-        { name: 'Kamal', points: 558378 },
-        { name: 'Sanak', points: 503042 },
-        { name: 'David', points: 352250 },
-        { name: 'Gobind', points: 346392 },
-        { name: 'Rajput', points: 343892 },
-        { name: 'Ishul', points: 321932 },
-        { name: 'Devil', points: 0 }
-      ];
+// const initializeUsers = async () => {
+//   try {
+//     const userCount = await User.countDocuments();
+//     if (userCount === 0) {
+//       const defaultUsers = [
+//         { name: 'Rahul', points: 1134590 },
+//         { name: 'Pritesh', points: 1614546 },
+//         { name: 'Krishu Rajput', points: 942034 },
+//         { name: 'Kamal', points: 558378 },
+//         { name: 'Sanak', points: 503042 },
+//         { name: 'David', points: 352250 },
+//         { name: 'Gobind', points: 346392 },
+//         { name: 'Rajput', points: 343892 },
+//         { name: 'Ishul', points: 321932 },
+//         { name: 'Devil', points: 0 }
+//       ];
 
-      await User.insertMany(defaultUsers);
-      console.log('Default users created');
-    }
-  } catch (error) {
-    console.error('Error initializing users:', error);
-  }
-};
- dbConnect()
+//       await User.insertMany(defaultUsers);
+//       console.log('Default users created');
+//     }
+//   } catch (error) {
+//     console.error('Error initializing users:', error);
+//   }
+// };
+
 // // Routes
 // app.use('/users', userRoutes);
 // app.use('/claims', claimRoutes);
@@ -184,18 +185,7 @@ app.get('/history', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
-// app.post('/',(req,res)=>{
-//   res.send("hello")
-// })
+dbConnect()
 
 export default app;
 // app.listen(PORT, () => {
