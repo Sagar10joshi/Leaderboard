@@ -16,10 +16,12 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 
+// CORS middleware configuration
 const corsOptions = {
-    origin: '*', // Allow all origins
-    methods: 'GET,POST,PUT,DELETE', // Specify allowed HTTP methods
-    allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
+    origin: 'https://leaderboard-jbk4.vercel.app/',  // Allow only your frontend domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true  // Allow cookies or credentials if needed
   };
   
   app.use(cors(corsOptions));
@@ -30,6 +32,16 @@ app.use(express.urlencoded({extended:false}))
 
 // app.use(cors());
 // app.use(express.json());
+
+app.get('/',(req,res)=>{
+    res.json("Welcome to Server")
+})
+
+app.get('/api/claims/history',(req,res)=>{
+    res.json("Welcome to Server")
+})
+
+
 
 const initializeUsers = async () => {
   try {
