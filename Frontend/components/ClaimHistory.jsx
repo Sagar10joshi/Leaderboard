@@ -12,6 +12,7 @@ function ClaimHistory() {
     try {
       const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/claims/history');
       const data = await response.json();
+      credentials: "include",
       setHistory(data);
       setLoading(false);
     } catch (error) {

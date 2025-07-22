@@ -61,6 +61,7 @@ function App() {
     try {
       const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/users');
       const data = await response.json();
+      credentials: "include",
       setUsers(data);
       setLoading(false);
 
@@ -82,6 +83,7 @@ function App() {
     try {
       const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/claims', {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -113,8 +115,9 @@ function App() {
 
   const handleAddUser = async (userName) => {
     try {
-      const response = await fetch('https://leaderboard-joshis-projects-a16fdb29.vercel.app/users', {
+      const response = await fetch('https://leaderboard-kappa-virid.vercel.app/users', {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
